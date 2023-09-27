@@ -1,0 +1,623 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>RewindPS4</class>
+ <widget class="QDialog" name="RewindPS4">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1079</width>
+    <height>559</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">);</string>
+  </property>
+  <widget class="QGroupBox" name="groupBox_version_setting">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>10</y>
+     <width>261</width>
+     <height>541</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(249, 249, 249);
+border: 1px solid rgb(63,63,70);</string>
+   </property>
+   <property name="title">
+    <string/>
+   </property>
+   <widget class="QLabel" name="label_game_id">
+    <property name="geometry">
+     <rect>
+      <x>24</x>
+      <y>480</y>
+      <width>53</width>
+      <height>15</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border: 0px </string>
+    </property>
+    <property name="text">
+     <string>游戏ID：</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_7">
+    <property name="geometry">
+     <rect>
+      <x>80</x>
+      <y>480</y>
+      <width>101</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border: 0px </string>
+    </property>
+    <property name="text">
+     <string>待获取</string>
+    </property>
+    <property name="wordWrap">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_6">
+    <property name="geometry">
+     <rect>
+      <x>80</x>
+      <y>456</y>
+      <width>161</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border: 0px </string>
+    </property>
+    <property name="text">
+     <string>待获取</string>
+    </property>
+    <property name="wordWrap">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_game_name">
+    <property name="geometry">
+     <rect>
+      <x>24</x>
+      <y>456</y>
+      <width>53</width>
+      <height>15</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border: 0px </string>
+    </property>
+    <property name="text">
+     <string>游戏名：</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_version">
+    <property name="geometry">
+     <rect>
+      <x>23</x>
+      <y>504</y>
+      <width>53</width>
+      <height>15</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border: 0px </string>
+    </property>
+    <property name="text">
+     <string>目标版本：</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_8">
+    <property name="geometry">
+     <rect>
+      <x>80</x>
+      <y>504</y>
+      <width>61</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border: 0px </string>
+    </property>
+    <property name="text">
+     <string>待获取</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_4">
+    <property name="geometry">
+     <rect>
+      <x>21</x>
+      <y>47</y>
+      <width>181</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="toolTip">
+     <string>已http://gs2.ww开头，json结尾的补丁链接</string>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border: 0px </string>
+    </property>
+    <property name="text">
+     <string>请粘贴目标补丁版本的json链接：</string>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="mode1">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>10</y>
+      <width>211</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="toolTip">
+     <string/>
+    </property>
+    <property name="statusTip">
+     <string/>
+    </property>
+    <property name="whatsThis">
+     <string/>
+    </property>
+    <property name="accessibleName">
+     <string/>
+    </property>
+    <property name="accessibleDescription">
+     <string/>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(255, 255, 255);
+font: 10pt &quot;Microsoft YaHei UI&quot;;
+border: 0px</string>
+    </property>
+    <property name="locale">
+     <locale language="Chinese" country="China"/>
+    </property>
+    <property name="text">
+     <string>模式1：下载指定版本</string>
+    </property>
+    <property name="checked">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QGroupBox" name="groupBox_3">
+    <property name="geometry">
+     <rect>
+      <x>9</x>
+      <y>200</y>
+      <width>241</width>
+      <height>331</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>目标游戏信息</string>
+    </property>
+    <widget class="QGraphicsView" name="cover">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>20</y>
+       <width>221</width>
+       <height>221</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(30, 30, 30);border: 0</string>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::NoFrame</enum>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QTextEdit" name="json_link_area">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>70</y>
+      <width>241</width>
+      <height>101</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QTextEdit {background-color: rgb(30, 30, 30);}QTextEdit:hover {border: 1px solid cyan;}</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="json_input_status">
+    <property name="geometry">
+     <rect>
+      <x>22</x>
+      <y>177</y>
+      <width>111</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border: 0px </string>
+    </property>
+    <property name="text">
+     <string>尚未输入补丁链接</string>
+    </property>
+   </widget>
+   <zorder>groupBox_3</zorder>
+   <zorder>label_game_id</zorder>
+   <zorder>label_7</zorder>
+   <zorder>label_6</zorder>
+   <zorder>label_game_name</zorder>
+   <zorder>label_version</zorder>
+   <zorder>label_8</zorder>
+   <zorder>label_4</zorder>
+   <zorder>mode1</zorder>
+   <zorder>json_link_area</zorder>
+   <zorder>json_input_status</zorder>
+  </widget>
+  <widget class="QGroupBox" name="groupBox">
+   <property name="geometry">
+    <rect>
+     <x>280</x>
+     <y>10</y>
+     <width>271</width>
+     <height>131</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(244, 244, 244);border: 1px solid rgb(63,63,70);</string>
+   </property>
+   <property name="title">
+    <string/>
+   </property>
+   <widget class="QLabel" name="label_14">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>49</y>
+      <width>231</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="toolTip">
+     <string/>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border: 0</string>
+    </property>
+    <property name="text">
+     <string>说明：模式2仅在PS4主机生效,</string>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="mode2">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>10</y>
+      <width>211</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="toolTip">
+     <string/>
+    </property>
+    <property name="statusTip">
+     <string/>
+    </property>
+    <property name="whatsThis">
+     <string/>
+    </property>
+    <property name="accessibleName">
+     <string/>
+    </property>
+    <property name="accessibleDescription">
+     <string/>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(255, 255, 255);border: 0;
+font: 10pt &quot;Microsoft YaHei UI&quot;;</string>
+    </property>
+    <property name="locale">
+     <locale language="Chinese" country="China"/>
+    </property>
+    <property name="text">
+     <string>模式2：屏蔽补丁，只下载本体</string>
+    </property>
+    <property name="checked">
+     <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_15">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>80</y>
+      <width>231</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="toolTip">
+     <string/>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border: 0</string>
+    </property>
+    <property name="text">
+     <string>本体一般情况下即版本号1.0的原始版本。</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QGroupBox" name="groupBox_proxy_setting">
+   <property name="geometry">
+    <rect>
+     <x>280</x>
+     <y>150</y>
+     <width>271</width>
+     <height>201</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(245, 245, 245);border: 1px solid rgb(63,63,70);</string>
+   </property>
+   <property name="title">
+    <string>代理设置</string>
+   </property>
+   <widget class="QLineEdit" name="ip_address">
+    <property name="geometry">
+     <rect>
+      <x>90</x>
+      <y>20</y>
+      <width>141</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(37,37,38);background-color: rgb(30, 30, 30);</string>
+    </property>
+    <property name="readOnly">
+     <bool>true</bool>
+    </property>
+    <property name="placeholderText">
+     <string>255.255.255.255</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="proxy_status">
+    <property name="geometry">
+     <rect>
+      <x>80</x>
+      <y>120</y>
+      <width>131</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border: 0;text-align: center; </string>
+    </property>
+    <property name="text">
+     <string>代理服务器运行中</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="proxy_switch">
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>150</y>
+      <width>181</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {background-color: rgb(37,37,38); color: #fff;border: 1px solid #fff}
+QPushButton:hover {font:  11pt &quot;Microsoft YaHei UI&quot;;border: 1px solid cyan}
+</string>
+    </property>
+    <property name="text">
+     <string>启动代理</string>
+    </property>
+   </widget>
+   <widget class="QSpinBox" name="port">
+    <property name="geometry">
+     <rect>
+      <x>90</x>
+      <y>70</y>
+      <width>141</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="toolTip">
+     <string>范围：1024~65535</string>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QSpinBox{background-color: rgb(30, 30, 30);}
+QSpinBox:hover {border: 1px solid cyan}</string>
+    </property>
+    <property name="maximum">
+     <number>65535</number>
+    </property>
+    <property name="value">
+     <number>8080</number>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_ip">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>30</y>
+      <width>53</width>
+      <height>15</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border: 0</string>
+    </property>
+    <property name="text">
+     <string>本机IP：</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_port">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>80</y>
+      <width>31</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border: 0</string>
+    </property>
+    <property name="text">
+     <string>端口：</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QGroupBox" name="groupBox_2">
+   <property name="geometry">
+    <rect>
+     <x>560</x>
+     <y>10</y>
+     <width>511</width>
+     <height>541</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(255, 255, 255);border: 1px solid rgb(63,63,70);</string>
+   </property>
+   <property name="title">
+    <string>运行日志</string>
+   </property>
+   <widget class="QTextEdit" name="logs">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>20</y>
+      <width>491</width>
+      <height>491</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(30, 30, 30);
+color: rgb(217, 217, 217);
+font: 9pt &quot;Arial&quot;;</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_16">
+    <property name="geometry">
+     <rect>
+      <x>280</x>
+      <y>515</y>
+      <width>231</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="toolTip">
+     <string/>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border: 0</string>
+    </property>
+    <property name="text">
+     <string>RewindPS4 V0.5 aikikarius@gmail.com</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QGroupBox" name="groupBox_4">
+   <property name="geometry">
+    <rect>
+     <x>280</x>
+     <y>360</y>
+     <width>271</width>
+     <height>191</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(244, 244, 244);border: 1px solid rgb(63,63,70);</string>
+   </property>
+   <property name="title">
+    <string>快速指南</string>
+   </property>
+   <widget class="QLabel" name="label_10">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>16</y>
+      <width>251</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border: 0</string>
+    </property>
+    <property name="text">
+     <string>1.选择模式，模式1请填写目标版本json链接，
+模式2直接勾选即可。</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_11">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>66</y>
+      <width>251</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border: 0</string>
+    </property>
+    <property name="text">
+     <string>2.点击启动代理，在主机网络设置的proxy
+选项里面，填写好上面显示的IP或端口。
+端口可自己指定。</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_12">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>111</y>
+      <width>251</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border: 0</string>
+    </property>
+    <property name="text">
+     <string>3.在主机上开始下载游戏。</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QGroupBox" name="groupBoxALL">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>-10</y>
+     <width>1081</width>
+     <height>571</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(42, 42, 42);</string>
+   </property>
+   <property name="title">
+    <string>GroupBox</string>
+   </property>
+  </widget>
+  <zorder>groupBoxALL</zorder>
+  <zorder>groupBox_4</zorder>
+  <zorder>groupBox_2</zorder>
+  <zorder>groupBox_version_setting</zorder>
+  <zorder>groupBox</zorder>
+  <zorder>groupBox_proxy_setting</zorder>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
