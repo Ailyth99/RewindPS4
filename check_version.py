@@ -1,9 +1,4 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Tue Aug 29 14:45:06 2023
 
-@author: Sylph
-"""
 from datetime import datetime
 import hmac,hashlib,binascii
 import re,os,json,requests,socket,pathlib
@@ -25,8 +20,10 @@ def extract_cusa_id(url):
     
     return str(match.group(1))
 
+i=True
 
 def check_version(cusa_id):
+    global i
     if not re.match(r'CUSA\d{5}', cusa_id):
         print('游戏ID错误')
 
@@ -38,7 +35,7 @@ def check_version(cusa_id):
         response = requests.get(xml_url, verify=False)
 
         if response.status_code != 200:
-            print(f'error ：gs-sec.ww.np.dl.playstation.net，CODE:{response.status_code}')
+            tprint(f'error ：gs-sec.ww.np.dl.playstation.net，CODE:{response.status_code}')
         else:
             XML=ET.fromstring(response.content)
             CUSA=XML.attrib["titleid"]
@@ -47,34 +44,18 @@ def check_version(cusa_id):
            
 
             if version:
-                #print("从xml获取成功")
+                
+                if i:
+                    tprint(f"成功获取到游戏《<font color='#a82fff'><b>{title}</b></font>》的基本信息")
+                    i=False
                 return CUSA,title,version.replace(".", "")
             else:
-                print('在PSN version XML中找不到版本号')
+                tprint('在PSN version XML中找不到版本号')
 
     except Exception as e:
-        print(f"无法检测更新<br>Failed to retrieve the latest version from the gs-sec.ww.np.dl.playstation.net: {e}")
-
-    try:  # 方法2
-        url = "https://huggingface.co/datasets/Ailyth/patch_info/raw/main/extracted_info.txt"
-        response = requests.get(url,verify=False)
-      
-        if response.status_code == 200:
-            game_list = response.text.split("\n")
-            for game in game_list:
-                if cusa_id in game:
-                    version = game.split(",")[2]
-                    #print("从hf获取到最新版本")
-
-                    return version.replace(".", "")
-            #print("在文本文件中找不到游戏信息")
-        else:
-            print(f"无法获取文本文件，CODE:{response.status_code}")
-
-    except Exception as e:
-        print(f"备份版本信息库获取失败<br>Failed to retrieve the backup version information database. You can try again several times, it may succeed: {e}")
-
-    tprint("无法链接更新服务器,请检查本地网络是否能链接到gs-sec.ww.np.dl.playstation.net这个地址。")
+        tprint(f"无法连接更新服务器<br>Failed to retrieve the latest version from the gs-sec.ww.np.dl.playstation.net: {e}")
+    
+    tprint("从PSN服务器获取版本失败")
     return None
 
 
@@ -91,13 +72,13 @@ def title_metadata_info(cusa_id):
     response = requests.get(tmdb_json_url)
     
     if response.status_code != 200:
-        tprint(f'(本错误不会影响锁定版本)无法打开tmdb信息(CODE:{response.status_code})，该游戏没有tmdb信息')
+        tprint(f'获取封面失败，但不影响锁定目标版本。(CODE:{response.status_code})')
     
     data = json.loads(response.text)
     #CUSA=data['npTitleId'].replace("_00", "")
     name = data['names'][0]['name']
     icon = data['icons'][0]['icon']
-    tprint(f"成功获取到游戏《<font color='#a82fff'><b>{name}</b></font>》的基本信息")#{tmdb_json_url}<br>Get the title metadata of {name}：{tmdb_json_url}')
+    #tprint(f"成功获取到游戏《<font color='#a82fff'><b>{name}</b></font>》的基本信息")#{tmdb_json_url}<br>Get the title metadata of {name}：{tmdb_json_url}')
     
     return name, icon
 

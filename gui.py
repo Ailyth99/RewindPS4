@@ -42,6 +42,7 @@ class ProxyHandler (hserv.BaseHTTPRequestHandler):
         super().__init__(*args, **kwargs)
 
     def log_date_time_string(self):
+        #时间格式
         now = datetime.now()
         return now.strftime('%m-%d %H:%M:%S')
 
@@ -291,7 +292,7 @@ class MainWindow(QtWidgets.QMainWindow):
         # 将LogHandler设置为Python的标准输出和标准错误流
         sys.stdout = log_handler
         sys.stderr = log_handler
-        print(f"[{datetime.now().strftime('%m-%d %H:%M:%S')}] >> <font color='#fff'>RewindPS4 ver 0.5</font>")
+        print(f"[{datetime.now().strftime('%m-%d %H:%M:%S')}] >> <font color='#fff'>RewindPS4 ver 0.8，aikikarius@gmail.com<br>请确保PC和主机处于同一个网络中</font>")
 
     def set_label_text(self, label, text):
         font_metrics = QtGui.QFontMetrics(label.font())
@@ -465,11 +466,20 @@ class MainWindow(QtWidgets.QMainWindow):
                     self.ui.cover.show()
                     self.ui.cover.fitInView(scene.sceneRect(), Qt.KeepAspectRatio)
                 except:
-                    self.ui.cover.hide()
+                    dummy_image_path = 'dummy.png'
+                    if os.path.exists(dummy_image_path):
+                        pixmap = QPixmap(dummy_image_path)
+                        scene = QGraphicsScene()
+                        scene.addPixmap(pixmap)
+                        self.ui.cover.setScene(scene)
+                        self.ui.cover.show()
+                        self.ui.cover.fitInView(scene.sceneRect(), Qt.KeepAspectRatio)
+                    else:
+                        self.ui.cover.hide()
 
             except TypeError:
                 self.ui.json_input_status.setText("获取版本失败，请检查网络")
-                self.ui.json_input_status.setStyleSheet("color:#c80000;")
+                self.ui.json_input_status.setStyleSheet("color:#c80000;border:0;")
                 self.ui.label_8.setText("获取失败")
                 self.ui.label_7.setText("获取失败")
                 self.ui.label_6.setText("获取失败")
@@ -489,7 +499,7 @@ class ProxyThread(QtCore.QThread):
         self.server = ThreadingHTTPServer(server_address, lambda *args, **kwargs: ProxyHandler(*args, black_list=self.black_list, **kwargs))  # 赋值server
 
         (host, port) = self.server.socket.getsockname()
-        tprint(f"<br>✨代理服务器已启动<br>正在监听：{host}， 端口: {port}")
+        tprint(f"✨代理服务器已启动，正在监听：{host}， 端口: {port}")
          # 在一个循环中运行代理服务器
         while QtWidgets.QApplication.instance():
             self.server.handle_request()
@@ -498,7 +508,7 @@ class ProxyThread(QtCore.QThread):
 
 
 if __name__ == '__main__':
-    QtCore.QCoreApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling, True) #自适应分辨率
+    QtCore.QCoreApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling) #自适应分辨率
     QtCore.QCoreApplication.setAttribute(QtCore.Qt.AA_UseHighDpiPixmaps, True) #使用高DPI位图
     app = QtWidgets.QApplication(sys.argv)
     app.setHighDpiScaleFactorRoundingPolicy(Qt.HighDpiScaleFactorRoundingPolicy.PassThrough) #设置缩放因子的舍入策略
