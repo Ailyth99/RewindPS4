@@ -81,7 +81,7 @@ class ProxyHandler (hserv.BaseHTTPRequestHandler):
     def do_CONNECT(self):
         if any(bad_url in self.path for bad_url in self.black_list):
             self.send_error(403)
-            tprint(f"<font color='#f51c7a'>已屏蔽版本检查</font>")
+            tprint(f"<font color='#f51c7a'>{tr('已屏蔽版本检查')}</font>")
             return
         soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         try:
@@ -126,18 +126,18 @@ class ProxyHandler (hserv.BaseHTTPRequestHandler):
             if pattern.search(self.path):
                 now=datetime.now().strftime('%m-%d %H:%M:%S')
                 original_version = extract_version(self.path)
-                print(f"{self.client_address[0]}[{now}] >> <font color='#ffaa00'><b>找到最新版本:</b></font><font color='#80ffe3'>[{original_version}]</font>{self.path}")  # 输出替换前的URL
+                print(f"{self.client_address[0]}[{now}] >> <font color='#ffaa00'><b>{tr('找到最新版本:')}</b></font><font color='#80ffe3'>[{original_version}]</font>{self.path}")  # 输出替换前的URL
 
         # 检查两个URL是否属于同一个游戏
                 original_cusa_id = extract_cusa_id(self.path)
                 replacement_cusa_id = extract_cusa_id(replacement)
                 if original_cusa_id != replacement_cusa_id:
-                    tprint(f"<br><font color='#f54b4e'>########################################<br><b>错误：不属于同一个游戏ID<br>需要下载的游戏CUSA ID是{original_cusa_id}，<br>替换的版本对应CUSA ID是{replacement_cusa_id}<br>PS5:报错CE-107893-8<br>PS4:直接报错无法下载</b><br>########################################</font>")
+                    tprint(f"<br><font color='#f54b4e'>########################################<br><b>{tr('错误：不属于同一个游戏ID<br>需要下载的游戏CUSA ID是')}{original_cusa_id}，<br>{tr('替换的版本对应CUSA ID是')}{replacement_cusa_id}<br>{tr('PS5:报错CE-107893-8<br>PS4:直接报错无法下载')}</b><br>########################################</font>")
                     #break
 
                 replacement_version = extract_version(replacement)
                 self.path = replacement
-                print(f"{self.client_address[0]}[{now}] >> <font color='#ffaa00'><b>已映射版本为:</b></font><font color='#80ffe3'>[{replacement_version}]</font>{self.path}")  # 输出替换后的URL
+                print(f"{self.client_address[0]}[{now}] >> <font color='#ffaa00'><b>{tr('已映射版本为:')}</b></font><font color='#80ffe3'>[{replacement_version}]</font>{self.path}")  # 输出替换后的URL
                 break
         soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         try:
@@ -185,14 +185,14 @@ class ProxyHandler (hserv.BaseHTTPRequestHandler):
                         try:
                             data = i.recv(8192)
                         except (ConnectionAbortedError, ConnectionResetError):
-                            print(f"{self.client_address[0]}[{now}]>> 链接被中断")
+                            print(f"{self.client_address[0]}[{now}]>> {tr('链接被中断')}")
                             return
                         if data:
                             out.send(data)
                             count = 0
                             self.data_transferred += len(data) # 更新数据传输量
             except (ConnectionAbortedError, ConnectionResetError):
-                print(f"{self.client_address[0]}[{now}]>> 链接被中断")
+                print(f"{self.client_address[0]}[{now}]>> {tr('链接被中断')}")
                 break
             if count == max_idling:
                 break
@@ -252,13 +252,15 @@ class LogHandler(QtCore.QObject):
             if ppkgo and cusa_match and version_match and pkg and nojson and noDP and nopng:
                 version = version_match.group(1)
                 formatted_version = f"{version[:2]}.{version[2:]}"
-                text = text.replace("GET", "<b><font color='#ffa1b7'>[{}]</font><font color='#80ffe3'>[{}]</font>正在下载补丁：</b><br>".format(cusa_match.group(1),formatted_version))
+                temp = "<b><font color='#ffa1b7'>[{}]</font><font color='#80ffe3'>[{}]</font>{}</b><br>"
+                text = text.replace("GET", temp.format(cusa_match.group(1), formatted_version, tr('正在下载补丁：')))
 
             if appkgo and cusa_match and pkg and nojson and noDP and nopng:
-                text = text.replace("GET", "<b><font color='#ffa1b7'>[{}]</font>正在下载本体：</b><br>".format(cusa_match.group(1)))
+                temp = "<b><font color='#ffa1b7'>[{}]</font>{}</b><br>"
+                text = text.replace("GET", temp.format(cusa_match.group(1), tr('正在下载本体：')))
 
             if PPSA and pkg and nojson and noDP and nopng:
-                text = text.replace("GET", "<b>正在下载PS5游戏：</b><br>")
+                text = text.replace("GET", f"<b>{tr('正在下载PS5游戏：')}</b><br>")
 
             self.signal.emit(str(text))
 
@@ -289,10 +291,10 @@ class MainWindow(QtWidgets.QMainWindow):
         #logs
         log_handler = LogHandler(self)
         log_handler.signal.connect(self.ui.logs.append)
-        # 将LogHandler设置为Python的标准输出和标准错误流
+        # 将LogHandler设置为Python的标准输出和标准错误流，即GUI的日志区域
         sys.stdout = log_handler
         sys.stderr = log_handler
-        print(f"[{datetime.now().strftime('%m-%d %H:%M:%S')}] >> <font color='#fff'>RewindPS4 ver 0.8，aikikarius@gmail.com<br>请确保PC和主机处于同一个网络中</font>")
+        print(f"[{datetime.now().strftime('%m-%d %H:%M:%S')}] >> <font color='#fff'>RewindPS4 ver 0.9，aikikarius@gmail.com<br>{tr('请确保PC和主机处于同一个网络中')}</font>")
 
     def set_label_text(self, label, text):
         font_metrics = QtGui.QFontMetrics(label.font())
@@ -300,13 +302,13 @@ class MainWindow(QtWidgets.QMainWindow):
         label.setText(elided_text)
     
     def reset_game_info(self):
-        self.ui.label_8.setText("待获取")
-        self.ui.label_7.setText("待获取")
-        self.ui.label_6.setText("待获取")
+        self.ui.label_8.setText(tr("待获取"))
+        self.ui.label_7.setText(tr("待获取"))
+        self.ui.label_6.setText(tr("待获取"))
 
     def update_proxy_status(self):
-        self.dot_count = (self.dot_count + 1) % 6  # 循环显示0到5个点
-        self.ui.proxy_status.setText("代理服务器运行中" + "." * self.dot_count)
+        self.dot_count = (self.dot_count+1)% 7  # 循环显示点点
+        self.ui.proxy_status.setText(tr("代理服务器运行中") + "." * self.dot_count)
 
     def start_proxy(self):
         QMenu_style = '''
@@ -320,9 +322,9 @@ class MainWindow(QtWidgets.QMainWindow):
             if json_link == "" or json_link.endswith(".json") and json_link.startswith("http://gs2.ww.prod.dl.playstation.net/gs2/ppkgo/prod/"):
                 self.proxy_thread = ProxyThread(self.ui, self.black_list)
                 self.proxy_thread.start()
-                self.setWindowTitle("RewindPS4 -运行中-")
-                self.ui.proxy_switch.setText("终止代理")
-                self.ui.proxy_status.setText("代理服务运行中")
+                self.setWindowTitle(tr("RewindPS4 -运行中-"))
+                self.ui.proxy_switch.setText(tr("终止代理"))
+                self.ui.proxy_status.setText(tr("代理服务运行中"))
                 self.ui.proxy_status.setStyleSheet("color: cyan;font:800;border: 0")
                 self.timer.start(200) 
                 self.ui.mode1.setEnabled(False)
@@ -350,7 +352,7 @@ class MainWindow(QtWidgets.QMainWindow):
             else:
                 msgBox = QMessageBox()
                 msgBox.setStyleSheet("")
-                msgBox.warning(self, "提示", "请输入正确补丁链接，或留空")
+                msgBox.warning(self, tr("提示"), tr("请输入正确补丁链接，或留空"))
 
     def stop_proxy(self):
         QMenu_style = '''
@@ -360,8 +362,8 @@ class MainWindow(QtWidgets.QMainWindow):
             self.proxy_thread.terminate()
             self.proxy_thread.wait()
             self.setWindowTitle("RewindPS4")
-            self.ui.proxy_switch.setText("启动代理")
-            self.ui.proxy_status.setText("代理未启动")
+            self.ui.proxy_switch.setText(tr("启动代理"))
+            self.ui.proxy_status.setText(tr("代理未启动"))
             self.ui.proxy_status.setStyleSheet("color: #808080;border: 0")
             self.timer.stop()
             # 释放端口
@@ -392,7 +394,7 @@ class MainWindow(QtWidgets.QMainWindow):
         QPushButton:hover {font:  11pt \"Microsoft YaHei UI\";border: 1px solid cyan}
                                         ''')
 
-            tprint("<br>🚨代理服务器已关闭")
+            tprint(f"<br>🚨{tr('代理服务器已关闭')}")
 
     #关闭GUI，终止程序运行
     def closeEvent(self, event):
@@ -431,12 +433,12 @@ class MainWindow(QtWidgets.QMainWindow):
     def handle_json_link_area_text_change(self):
         target_json = self.ui.json_link_area.toPlainText().strip()
         if not target_json:
-            self.ui.json_input_status.setText("尚未输入连接")
+            self.ui.json_input_status.setText(tr("尚未输入连接"))
             self.ui.json_input_status.setStyleSheet("color:#fff;border: 0")
             self.reset_game_info()
             self.ui.cover.hide()
         elif not (target_json.startswith("http://gs2.ww.prod.dl.playstation.net/gs2/ppkgo/prod/") and target_json.endswith(".json") and target_json.count(".json") == 1):
-            self.ui.json_input_status.setText("请输入正确的补丁链接")
+            self.ui.json_input_status.setText(tr("请输入正确的补丁链接"))
             self.reset_game_info()
             self.ui.cover.hide()
 
@@ -448,7 +450,7 @@ class MainWindow(QtWidgets.QMainWindow):
                 self.set_label_text(self.ui.label_6, i[1])
                 self.set_label_text(self.ui.label_7, i[0])
                 self.ui.label_8.setText("<b><font color='#00ffff'>" + extract_version(target_json) + "</font></b>")
-                self.ui.json_input_status.setText("已确定游戏版本")
+                self.ui.json_input_status.setText(tr("已确定游戏版本"))
                 self.ui.json_input_status.setStyleSheet("border: 0;;color:#00c85a;font:10pt \"Microsoft YaHei UI Semibold\";")
 
                 #显示游戏cover
@@ -478,11 +480,11 @@ class MainWindow(QtWidgets.QMainWindow):
                         self.ui.cover.hide()
 
             except TypeError:
-                self.ui.json_input_status.setText("获取版本失败，请检查网络")
+                self.ui.json_input_status.setText(tr("获取版本失败，请检查网络或json链接"))
                 self.ui.json_input_status.setStyleSheet("color:#c80000;border:0;")
-                self.ui.label_8.setText("获取失败")
-                self.ui.label_7.setText("获取失败")
-                self.ui.label_6.setText("获取失败")
+                self.ui.label_8.setText(tr("获取失败"))
+                self.ui.label_7.setText(tr("获取失败"))
+                self.ui.label_6.setText(tr("获取失败"))
                 #self.reset_game_info() 
 
 class ProxyThread(QtCore.QThread):
@@ -499,8 +501,12 @@ class ProxyThread(QtCore.QThread):
         self.server = ThreadingHTTPServer(server_address, lambda *args, **kwargs: ProxyHandler(*args, black_list=self.black_list, **kwargs))  # 赋值server
 
         (host, port) = self.server.socket.getsockname()
-        tprint(f"✨代理服务器已启动，正在监听：{host}， 端口: {port}")
-         # 在一个循环中运行代理服务器
+        tprint(f"""✨{tr('代理服务器已启动')}， IP：{get_local_ip()}，{tr('端口：')} {port}<br>{tr('请将PS主机接入此代理服务器。')}
+                 <br><i>{tr('PS4:网络设置→定制→proxy服务器→使用→填好IP和端口')}<br>
+                 {tr('PS5:网络设置→选择某个网络→按Option→详细设置→proxy服务器开启→填写好IP和端口')}
+                 </i>
+                 """)
+
         while QtWidgets.QApplication.instance():
             self.server.handle_request()
         self.ui.proxy_switch.setEnabled(True)

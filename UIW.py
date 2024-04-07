@@ -1,5 +1,6 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 import requests
+from translator import tr
 
 class MyGraphicsView(QtWidgets.QGraphicsView):
     def __init__(self, parent=None):
@@ -14,13 +15,13 @@ class MyGraphicsView(QtWidgets.QGraphicsView):
         QMenu {background-color: #353535; color: #fff}
         QMenu::item:selected {background-color: #4a4a4a;color:cyan}
         ''')
-        saveAction = contextMenu.addAction("保存图片")
+        saveAction = contextMenu.addAction(tr("SAVE"))
         saveAction.triggered.connect(self.saveImage)
         contextMenu.exec_(self.mapToGlobal(position))
 
     def saveImage(self):
         if self.image_url:
-            fileName, _ = QtWidgets.QFileDialog.getSaveFileName(self, "保存图片", "game_cover", "Images (*.png  *.jpg)")
+            fileName, _ = QtWidgets.QFileDialog.getSaveFileName(self, "SAVE", "game_cover", "Images (*.png  *.jpg)")
             if fileName:
                 response = requests.get(self.image_url)
                 with open(fileName, 'wb') as f:
@@ -48,12 +49,12 @@ class Ui_Dialog(object):
         self.label_game_id.setStyleSheet("border: 0px ")
         self.label_game_id.setObjectName("label_game_id")
         self.label_7 = QtWidgets.QLabel(self.groupBox_version_setting)
-        self.label_7.setGeometry(QtCore.QRect(100, 480, 121, 16))
+        self.label_7.setGeometry(QtCore.QRect(110, 480, 121, 16))
         self.label_7.setStyleSheet("border: 0px ")
         self.label_7.setWordWrap(True)
         self.label_7.setObjectName("label_7")
         self.label_6 = QtWidgets.QLabel(self.groupBox_version_setting)
-        self.label_6.setGeometry(QtCore.QRect(100, 456, 211, 16))
+        self.label_6.setGeometry(QtCore.QRect(110, 456, 211, 16))
         self.label_6.setStyleSheet("border: 0px ")
         self.label_6.setWordWrap(True)
         self.label_6.setObjectName("label_6")
@@ -66,7 +67,7 @@ class Ui_Dialog(object):
         self.label_version.setStyleSheet("border: 0px ")
         self.label_version.setObjectName("label_version")
         self.label_8 = QtWidgets.QLabel(self.groupBox_version_setting)
-        self.label_8.setGeometry(QtCore.QRect(100, 504, 101, 16))
+        self.label_8.setGeometry(QtCore.QRect(110, 504, 101, 16))
         self.label_8.setStyleSheet("border: 0px ")
         self.label_8.setObjectName("label_8")
         self.label_4 = QtWidgets.QLabel(self.groupBox_version_setting)
@@ -106,7 +107,7 @@ class Ui_Dialog(object):
         self.json_link_area.setAcceptRichText(False)
         self.json_link_area.setObjectName("json_link_area")
         self.json_input_status = QtWidgets.QLabel(self.groupBox_version_setting)
-        self.json_input_status.setGeometry(QtCore.QRect(20, 177, 291, 16))
+        self.json_input_status.setGeometry(QtCore.QRect(10, 177, 291, 16))
         self.json_input_status.setStyleSheet("border: 0px ")
         self.json_input_status.setObjectName("json_input_status")
         self.groupBox_3.raise_()
@@ -248,41 +249,41 @@ class Ui_Dialog(object):
         
 
     def retranslateUi(self, Dialog):
-        _translate = QtCore.QCoreApplication.translate
-        Dialog.setWindowTitle(_translate("Dialog", "RewindPS4"))
-        self.label_game_id.setText(_translate("Dialog", "游戏编号："))
-        self.label_7.setText(_translate("Dialog", "待获取"))
-        self.label_6.setText(_translate("Dialog", "待获取"))
-        self.label_game_name.setText(_translate("Dialog", "游戏名称："))
-        self.label_version.setText(_translate("Dialog", "目标版本："))
-        self.label_8.setText(_translate("Dialog", "待获取"))
-        self.label_4.setToolTip(_translate("Dialog", "已http://gs2.ww开头，json结尾的补丁链接"))
-        self.label_4.setText(_translate("Dialog", "请粘贴目标补丁版本的json链接："))
-        self.mode1.setText(_translate("Dialog", "模式1：下载指定版本"))
-        self.groupBox_3.setTitle(_translate("Dialog", "目标游戏信息"))
-        self.json_input_status.setText(_translate("Dialog", "尚未输入补丁链接"))
-        self.label_14.setText(_translate("Dialog", "说明：模式2仅在PS4主机生效,"))
-        self.mode2.setText(_translate("Dialog", "模式2：屏蔽补丁，只下载本体"))
-        self.label_15.setText(_translate("Dialog", "本体一般情况下即版本号1.0的原始版本。"))
-        self.groupBox_proxy_setting.setTitle(_translate("Dialog", "代理设置"))
-        self.ip_address.setPlaceholderText(_translate("Dialog", "255.255.255.255"))
-        self.proxy_status.setText(_translate("Dialog", "代理未启动"))
-        self.proxy_switch.setText(_translate("Dialog", "启动代理"))
-        self.port.setToolTip(_translate("Dialog", "范围：1024~65535"))
-        self.label_ip.setText(_translate("Dialog", "本机IP："))
-        self.label_port.setText(_translate("Dialog", "端口："))
-        self.groupBox_2.setTitle(_translate("Dialog", "运行日志"))
-        self.label_info.setText(_translate("Dialog", ""))
-        self.label_link.setText(_translate("Dialog", "<a href='https://orbispatches.com/' style='color: #fff;'>前往获取补丁链接</a>"))
-        self.label_guide.setText(_translate("Dialog", "<a href='https://foggy-bath-a54.notion.site/RewindPS4-Guide-e130c168d2814ec288aad32d57518ed8?pvs=4' style='color: #fff;'>详细使用指南</a>"))
-        self.groupBox_4.setTitle(_translate("Dialog", "快速指南"))
-        self.label_10.setText(_translate("Dialog", "1.选择模式，模式1请填写目标版本json链接，\n"
+        #_translate = QtCore.QCoreApplication.translate
+        Dialog.setWindowTitle("RewindPS4")
+        self.label_game_id.setText(tr("游戏编号："))
+        self.label_7.setText(tr("待获取"))
+        self.label_6.setText(tr("待获取"))
+        self.label_game_name.setText(tr("游戏名称："))
+        self.label_version.setText(tr("目标版本："))
+        self.label_8.setText(tr("待获取"))
+        self.label_4.setToolTip(tr("已http://gs2.ww开头，json结尾的补丁链接"))
+        self.label_4.setText(tr("请粘贴目标补丁版本的json链接："))
+        self.mode1.setText(tr("模式1：下载指定版本"))
+        self.groupBox_3.setTitle(tr("目标游戏信息"))
+        self.json_input_status.setText(tr("尚未输入补丁链接"))
+        self.label_14.setText(tr("说明：模式2仅在PS4主机生效,"))
+        self.mode2.setText(tr("模式2：屏蔽补丁，只下载本体"))
+        self.label_15.setText(tr("本体一般情况下即版本号1.0的原始版本。"))
+        self.groupBox_proxy_setting.setTitle(tr("代理设置"))
+        self.ip_address.setPlaceholderText("255.255.255.255")
+        self.proxy_status.setText(tr("代理未启动"))
+        self.proxy_switch.setText(tr("启动代理"))
+        self.port.setToolTip(tr("<font color='black'>1024~65535</font>"))
+        self.label_ip.setText(tr("本机IP："))
+        self.label_port.setText(tr("端口："))
+        self.groupBox_2.setTitle(tr("运行日志"))
+        self.label_info.setText("")
+        self.label_link.setText(f"<a href='https://orbispatches.com/' style='color: #fff;'>{tr('前往获取补丁链接')}</a>")
+        self.label_guide.setText(f"<a href='{tr('https://foggy-bath-a54.notion.site/RewindPS4-Guide-e130c168d2814ec288aad32d57518ed8?pvs=4')}' style='color: #fff;'>{tr('详细使用指南')}</a>")
+        self.groupBox_4.setTitle(tr("快速指南"))
+        self.label_10.setText(tr("1.选择模式，模式1请填写目标版本json链接，\n"
 "模式2直接勾选即可。"))
-        self.label_11.setText(_translate("Dialog", "2.点击启动代理，在主机网络设置的proxy\n"
+        self.label_11.setText(tr("2.点击启动代理，在主机网络设置的proxy\n"
 "选项里面，填写好上面显示的IP或端口。\n"
 "端口可自己指定。"))
-        self.label_12.setText(_translate("Dialog", "3.在主机上开始下载游戏。"))
-        self.groupBoxALL.setTitle(_translate("Dialog", "GroupBox"))
+        self.label_12.setText(tr("3.在主机上开始下载游戏。"))
+        self.groupBoxALL.setTitle("GroupBox")
        
 class ClickableLabel(QtWidgets.QLabel):
     def __init__(self, parent=None):
@@ -290,6 +291,6 @@ class ClickableLabel(QtWidgets.QLabel):
 
     def mousePressEvent(self, event):
         msgBox = QtWidgets.QMessageBox()
-        msgBox.setWindowTitle("关于")  # 设置窗口标题
-        msgBox.setText("RewindPS4 v0.8\naikikarius@gmail.com")
+        msgBox.setWindowTitle("关于")  
+        msgBox.setText("RewindPS4\naikikarius@gmail.com")
         msgBox.exec_()
