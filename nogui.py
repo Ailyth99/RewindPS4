@@ -23,12 +23,15 @@ class ProxyHandler (hserv.BaseHTTPRequestHandler):
     server_version = "TinyHTTPProxy/" + __version__
     rbufsize = 0                        
 
-    #黑名单
-    black_list = [""]
-
+    
     def __init__(self, *args, **kwargs):
-        self.black_list = [url for url in self.black_list if url]
-        self.last_version_num = check_version(extract_cusa_id(self.target_json))[2]
+        self.black_list = kwargs.pop('black_list', [])
+        if 'target_json' in kwargs:
+            self.target_json = kwargs.pop('target_json')
+            self.last_version_num = check_version(extract_cusa_id(self.target_json))[2]
+        else:
+            self.target_json = None
+            self.last_version_num = None
         super().__init__(*args, **kwargs)
 
     def log_date_time_string(self):
@@ -64,7 +67,7 @@ class ProxyHandler (hserv.BaseHTTPRequestHandler):
     def do_CONNECT(self):
         if any(bad_url in self.path for bad_url in self.black_list):
             self.send_error(403)
-            print('------>>已屏蔽/Blocked：',self.path)
+            print('------>>Blocked:',self.path)
             return
         soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         try:
@@ -106,9 +109,9 @@ class ProxyHandler (hserv.BaseHTTPRequestHandler):
         for pattern, replacement in self.replacements:
             if pattern.search(self.path):
                 now=datetime.now().strftime('%m-%d %H:%M:%S:%f')[:-3]
-                print(f"[{now}] - - 找到目标URL/Find target URL: ", self.path)  # 输出替换前的URL
+                print(f"[{now}] - - Find target json: ", self.path)  # 输出替换前的URL
                 self.path = replacement
-                print(f"[{now}] - - URL已替换为/Replaced URL: ", self.path)  # 输出替换后的URL
+                print(f"[{now}] - - Replaced json: ", self.path)  # 输出替换后的URL
                 break
         soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         try:
@@ -163,37 +166,71 @@ class ThreadingHTTPServer (ThreadingMixIn, hserv.HTTPServer):
     pass
 
 def main(argv):
-    if argv[1:] and argv[1] in ('-h', '--help'):
-        print(argv[0], "[port [allowed_client_name ...]]")
-    else:
-        server_address = ('', int(argv[1]) if argv[1:] else 8080)
-        if argv[2:]:
-            allowed = []
-            for name in argv[2:]:
-                client = socket.gethostbyname(name)
-                allowed.append(client)
-                print("Accept: %s (%s)" % (client, name))
-            ProxyHandler.allowed_clients = allowed
+    print("""
+    ____               _           ______  _____ __ __
+   / __ \___ _      __(_)___  ____/ / __ \/ ___// // /
+  / /_/ / _ \ | /| / / / __ \/ __  / /_/ /\__ \/ // /_
+ / _, _/  __/ |/ |/ / / / / / /_/ / ____/___/ /__  __/
+/_/ |_|\___/|__/|__/_/_/ /_/\__,_/_/    /____/  /_/    
+
+                                v0.9 NoGUI Version 
+""")
+    while True:
+        mode = input(f"""Please choose mode
+Mode1 -- Download Specified Version (works on PS4/PS5 console)
+Mode2 -- Block Patches, Download 1.0 Base Game (only works on PS4 console)
+Enter 1 or 2:""").strip()
+        if mode == '1':
+            json_info='Please paste the JSON link of the patch you need to download:\n'
+            target_json = input(json_info)
+            while not target_json.startswith("http://gs2.ww.prod.dl.playstation.net/gs2/ppkgo/prod/") or not target_json.endswith(".json"):
+                print("Invalid URL, please try again:")
+                target_json = input()
+            black_list = []
+            break
+        elif mode == '2':
+            target_json = None
+            black_list = ["gs-sec.ww.np.dl.playstation.net"]
+            break
         else:
-            print("Any clients will be served...")
-        print("-------------\n【重要提示】请在下方输入正确的目标版本json链接。比如：http://gs2.ww.prod.dl.playstation.net/gs2/ppkgo/prod/CUSA31579_00/3/f_cf39347e65718377680b86477d9b6459737f003afe295e7bf979901187370bf7/f/UP3463-CUSA31579_00-6937190672078757-A0103-V0100.json\n-->获取任何版本的json链接，请访问：https://orbispatches.com/\n-------------")
-        print("【Important】Please enter the correct target version json link below. For example: http://gs2.ww.prod.dl.playstation.net/gs2/ppkgo/prod/CUSA31579_00/3/f_cf39347e65718377680b86477d9b6459737f003afe295e7bf979901187370bf7/f/UP34 63-CUSA31579_00-6937190672078757-A0103-V0100.json\n -->To get the json link for any version, please visit: https://orbispatches.com/\n-------------")
+            print("----------\nInvalid mode selected. Enter 1 or 2 to select mode\n----------")
 
-        target_json = input("请粘贴json地址/please paste json link：")
-        while not target_json.startswith("http://gs2.ww.prod.dl.playstation.net/gs2/ppkgo/prod/") or not target_json.endswith(".json"):
-            print("json链接不正确，请重新输入/Invalid URL, please try again.")
-            target_json = input("请粘贴json地址/please paste json link：")
+    port = int(argv[1]) if argv[1:] else 8080  # 默认端口8080
+    while True:
+        if check_port(port):
+            print(f"{tr('Port')} {port} {tr('is already in use')}")
+            while True:
+                port_input = input(tr("Please enter another port (1024-65535): "))
+                try:
+                    port = int(port_input)
+                    if 1024 <= port <= 65535:
+                        break  
+                    else:
+                        print(tr("Port number must be between 1024 and 65535."))
+                except ValueError:
+                    print(tr("Invalid input. Please enter an integer."))
+        else:
+            break  # 端口未被占用且合法
 
-        ProxyHandler.target_json = target_json
-        httpd = ThreadingHTTPServer(server_address, ProxyHandler)
-        (host, port) = httpd.socket.getsockname()
-        
-        i=check_version(extract_cusa_id(target_json))        
-        print("\n目标游戏/Target game：{} {}，降级版本/Downgrade version：{}".format(i[0], i[1], extract_version(target_json)))
-        print("\n代理服务器启动/Proxy server started","\n本机IP/Local IP：",get_local_ip(), ",端口/Port：", port)
-        print("请在主机设置好代理，再开始下载游戏/Please set up the proxy on the console before starting the game download.\n------------")
+    server_address = ('', port)
+    tprint(f"Model{mode} Selected")
+    
+    if mode == '1':
+        httpd = ThreadingHTTPServer(server_address, lambda *args, **kwargs: ProxyHandler(*args, target_json=target_json, black_list=black_list, **kwargs))
+    else:  
+        httpd = ThreadingHTTPServer(server_address, lambda *args, **kwargs: ProxyHandler(*args, black_list=black_list, **kwargs))
 
-        httpd.serve_forever()
+    if mode == '1' and target_json:
+        i = check_version(extract_cusa_id(target_json))
+        if i:  
+            game_info="Game Name: {}\nGame ID: {}\nDowngrade version: {}".format(i[1], i[0], extract_version(target_json))
+            print(game_info)
+
+    print("\nProxy server started", "\nProxy IP: ", get_local_ip(), " Port: ", server_address[1])
+    print("**The logs might show some errors, but as long as the download keeps going, just ignore those errors.")
+    print("Please set up the proxy network in your console's network settings, before starting the game download.\n------------")
+    
+    httpd.serve_forever()
 
 if __name__ == '__main__':
     main(sys.argv)

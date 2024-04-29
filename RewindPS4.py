@@ -318,6 +318,13 @@ class MainWindow(QtWidgets.QMainWindow):
         if hasattr(self, 'proxy_thread') and self.proxy_thread.isRunning():
             self.stop_proxy()  
         else:
+            port = self.ui.port.value()   
+            if check_port(port):  # 检查端口占用
+                msgBox = QMessageBox()
+                msgBox.setStyleSheet(QMenu_style)
+                msgBox.warning(self, tr("提示"), tr(f" {port} {tr('端口已被占用，请更换端口（1024~65535）。')}"))
+                return  # 如果端口被占用，直接返回，不继续执行启动，不然整个GUI要闪退
+
             json_link = self.ui.json_link_area.toPlainText().strip()
             if json_link == "" or json_link.endswith(".json") and json_link.startswith("http://gs2.ww.prod.dl.playstation.net/gs2/ppkgo/prod/"):
                 self.proxy_thread = ProxyThread(self.ui, self.black_list)

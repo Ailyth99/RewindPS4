@@ -97,6 +97,7 @@ def extract_version(url):
     else:
         return None
 
+
 def get_local_ip():
     try:
         sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -104,8 +105,16 @@ def get_local_ip():
         local_ip = sock.getsockname()[0]
         return local_ip
     except Exception as e:
-        tprint(f"获取本机IP失败：{e}<br>Failed to get local IP: {e}")
+        print(f"获取本机IP失败：{e}\nFailed to get local IP: {e}")
         return "获取本机IP失败"
+    finally:
+        sock.close()  
 
-
-
+#is port used
+def check_port(port):
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
+        try:
+            sock.bind(("127.0.0.1", port))
+            return False  # not use
+        except socket.error:
+            return True  # used
