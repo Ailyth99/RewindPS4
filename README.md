@@ -4,7 +4,7 @@
 
 This tool creates a proxy server that allows your PS console to connect and download specific versions of PS4 games, effectively enabling game downgrading. Due to game updates, some content may change over time. This tool allows you to play older versions of games.
 
-<img src="https://cdnjson.com/images/2024/07/15/194347.png" alt="screenshot">
+<a href="https://github.com/Ailyth99/RewindPS4/blob/main/build/screenshot.png" title="sss"><img src="./build/screenshot.png" alt="Details" width="100%"/></a>
 
 
 #### Important Notes
@@ -49,6 +49,6 @@ You can find it in the 'build/bin' directory.
 
 
 ## Old version
-Previous versions were written in Python, making them easily runnable on macOS or Linux.
+[Previous versions](https://github.com/Ailyth99/RewindPS4/tree/python) were written in Python, making them easily runnable on macOS or Linux.
 
 
