@@ -4,34 +4,51 @@
 
 This tool creates a proxy server that allows your PS console to connect and download specific versions of PS4 games, effectively enabling game downgrading. Due to game updates, some content may change over time. This tool allows you to play older versions of games.
 
+<img src="https://cdnjson.com/images/2024/07/15/194347.png" alt="screenshot">
+
+
 #### Important Notes
 
 1. This program works for downloading PS4 games on both PS4 and PS5 consoles. It does **NOT** work for PS5 games.
 2. This program is **NOT** a jailbreak method. You do not need to modify your console in any way.
 
-## User Guide
+## Guide
 
-[Complete Guide](https://foggy-bath-a54.notion.site/RewindPS4-Guide-ENGLISH-9ffe30e6e07a4077bc63b9c3511e458c?pvs=25)
+[Complete Guide](https://foggy-bath-a54.notion.site/RewindPS4-Guide1-0-ENGLISH-28164b6f656d445f823a0f7c7d9ae890?pvs=4)
 
-## Running the Source Code
 
-For Windows 7, Mac, or Linux, you can directly run the source code to start the program.
-
-1.Install Python 3 - available [here](https://www.python.org/downloads/). If you are using Windows 7, please download version 3.8 [here](https://www.python.org/downloads/release/python-3810/).
-2. Navigate to the project folder using the command line and install the dependencies:
-
-```python
-pip install -r requirements.txt
+## Run code
+This tool is built with a Go backend and a modern GUI powered by Wails and React. You'll need to have [Wails installed](https://wails.io/docs/gettingstarted/installation) beforehand, along with some frontend dependencies.
+```
+npm install --save baffle
+npm install i18next react-i18next i18next-browser-languagedetector
 ```
 
-3.Run the program
-
-```python
-python nogui.py
+run this tool,'cd' command to go into the main folder,input:
+```
+wails dev
 ```
 
-or for MacOS
-
-```python
-python3 nogui.py
+Compile to exe:
 ```
+wails build -clean -o yourexename.exe
+
+```
+You can find it in the 'build/bin' directory.
+
+## Credits
+*  [Goproxy](https://github.com/elazarl/goproxy)
+*  [Wails](wails.io)
+*  [Baffle](https://github.com/camwiegert/baffle)
+
+##### Font
+* SYN Nova Regular
+* Nihonbashi 2.0 alphabet
+* 造字工房尚黑细体
+* 東亜重工フォント(Custom)
+
+
+## Old version
+Previous versions were written in Python, making them easily runnable on macOS or Linux.
+
+

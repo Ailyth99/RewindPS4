@@ -1,0 +1,15 @@
+{
+	"fixed": {
+		"file_version": "{{.Info.ProductVersion}}"
+	},
+	"info": {
+		"0000": {
+			"ProductVersion": "{{.Info.ProductVersion}}",
+			"CompanyName": "Aensland Heavey Industry",
+			"FileDescription": "RewindPS4",
+			"LegalCopyright": "{{.Info.Copyright}}",
+			"ProductName": "{{.Info.ProductName}}",
+			"Comments": "{{.Info.Comments}}"
+		}
+	}
+}

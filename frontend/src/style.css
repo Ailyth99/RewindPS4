@@ -1,0 +1,402 @@
+html {
+    text-align: center;
+    
+}
+
+body {
+    margin: 0;
+  
+}
+
+body, html, #root {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+     
+   
+}
+
+#app {
+  height: 100vh;
+  text-align: center;
+  
+}
+
+@font-face { /*monospace font*/
+    font-family: "Nunito";
+    font-style: normal;
+    font-weight: 400;
+    src: local(""),
+    url("assets/fonts/nunito-v16-latin-regular.woff2") format("woff2");
+}
+
+
+@font-face {
+  font-family: 'Seiha';
+  src: url('./assets/fonts/seiha.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Yuehei';
+  src: url('./assets/fonts/ZaoZiGongFangShangHeiXiTi-1.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.font-seiha {
+  font-family: 'Seiha', sans-serif !important;
+  font-weight: normal;
+  font-style: normal;
+}
+
+.font-log {
+  font-size: 0.85rem;
+  font-family: 'Nunito', sans-serif;
+}
+
+  /*
+  中文字体 DEFAULT   "Noto Sans SC"
+  */
+
+  .font-zh {
+    font-family: "Yuehei", sans-serif !important;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal; 
+  }
+
+/*
+google fonts
+ 日本語フォント
+*/
+.font-ja {
+  font-family: "M PLUS 1 Code", monospace !important;
+  font-optical-sizing: auto;
+  font-weight: 300;
+  font-style: normal;
+}
+
+/*
+google fonts
+default 英語フォント
+*/
+.font-en {
+  font-family: 'Rajdhani', sans-serif !important;
+  font-weight: 400;
+}
+
+/*
+CUSTOM animation
+*/
+
+
+/*
+button animation
+*/
+
+
+@keyframes btn-loading-bar { /*loading bar*/
+  from {
+      width: 0%;
+      background-color: #4b4a4a; 
+  }
+  to {
+      width: 100%;
+      background-color: #f38165;/* ボタンloading bar最終の色 */
+  }
+}
+
+.btn-progress {
+  background-color: #ff3503; 
+  animation: btn-loading-bar 2s linear forwards;
+  box-shadow: 0 0 18px 3px rgb(253, 72, 0);  /* 右シャドウエフェクト */
+}
+
+
+.btn {
+  line-height: 50px;
+  height: 2.5rem;
+  text-align: center;
+  width: 8rem;
+  cursor: pointer;
+  transition: background 0.5s ease-in-out; 
+  position: relative;
+  overflow: hidden;
+  padding: 0;
+}
+
+.btn div {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 0; 
+ 
+}
+
+.btn-three {
+  overflow: hidden; 
+  position: relative;
+  color: transparent;
+  transition: all 0.5s;
+  position: relative;
+  background-size: 40px 40px;
+}
+
+.btn-three::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 1;
+	background-color: #ffffff1a;
+	transition: all 0.3s;
+}
+
+.btn-three:hover::before {
+	opacity: 0 ;
+	transform: scale(0.5,0.5);
+}
+
+
+.btn-three::after {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 1;
+	opacity: 0;
+	transition: all 0.3s;
+	background-color: #ffffff1a;
+	transform: scale(1.2,1.2);
+  
+}
+
+.btn-three:hover::after {
+	opacity: 1;
+	transform: scale(1,1);
+}
+  
+@keyframes slash {
+  0% {
+      background-position: left;
+  }
+  100% {
+      background-position: right;
+  }
+}
+
+
+@keyframes slash-animation {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+
+
+.btn-slash {
+  background-image: linear-gradient(45deg, #86636391 25%, #161313a9 25%, #161313a9 50%, #86636391 50%, #86636391 75%, #161313a9 75%, #161313a9);
+  background-size: 40px 40px;
+  animation: slash 6s linear infinite, slow-flash 2s linear infinite;
+}
+
+  /* 
+  mode erea shiny bg when hover
+  */
+  .mode-selection:not(.active):hover {
+    animation: flash-animation 1s ease-in-out; 
+  }
+  
+  @keyframes flash-animation {
+    0%, 100% { background-color: transparent; }
+    50% { background-color: #6b67675d; } 
+  }
+  
+  @keyframes slow-flash {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+
+@keyframes pulse {
+  0% {
+      opacity: 1;
+      transform: scale(1);
+  }
+  50% {
+      opacity: 0.5;
+      transform: scale(1.01);
+  }
+  100% {
+      opacity: 1;
+      transform: scale(1);
+  }
+}
+
+
+  /* 
+  draw border animation
+  */
+  .animated-border {
+    position: relative;
+    display: inline-block;
+  
+  }
+  
+  .border-svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+  }
+  
+
+  .border-svg-s {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 95.5%;
+    z-index: 0;
+  }
+
+  .thin-border {
+    stroke-width: 0.5; 
+  }
+  
+  @keyframes draw-border {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+  
+  .keyline1 {
+    stroke-dasharray: 400;
+    stroke-dashoffset: 400;
+    animation: draw-border 0.8s forwards cubic-bezier(.13,.65,.98,.72);
+  }
+  
+  .keyline2 {
+    stroke-dasharray: 400;
+    stroke-dashoffset: 400;
+    animation: draw-border 0.6s forwards cubic-bezier(.68,-0.55,.26,1.55);
+  }
+  
+  .keyline3 {
+    stroke-dasharray: 400;
+    stroke-dashoffset: 400;
+    animation: draw-border 0.8s forwards cubic-bezier(.63,.01,.99,.04);
+  }
+  
+  
+  .keyline4 {/*MODE CONTENT border*/
+    stroke-dasharray: 400;
+    stroke-dashoffset: 400;
+    animation: draw-border 0.4s forwards cubic-bezier(.93,.51,.05,.98);
+  }
+  
+  /* 
+  TITLE animation，like the unfolding of a flag
+  */
+  .animated-text-reveal {
+    clear: both;
+    color: #769c97; /*文字中途颜色 */
+    display: inline-block;
+    position: relative;
+    margin: 0;
+    animation: text-reveal 0.5s forwards;
+    
+    &:after {
+      content: '';
+      display: block;
+      position: absolute;
+      top: 0;
+      right: 100%;
+      bottom: 0;
+      left: 0;
+      background: #1e2122; /*动画遮罩颜色 */
+      animation: text-reveal-aft 1s forwards ;
+    }
+  }
+
+   
+
+
+  @keyframes text-reveal {
+    50% {
+      color: #77757585;
+    }
+    51% {
+      color: #bebebe;
+    }
+    100% {
+      color: #f1f1f1; /*文字最终颜色 */
+    }
+  }
+  @keyframes text-reveal-aft {
+    0% {
+    }
+    50% {
+      right: 0;
+      left: 0;
+    }
+    100% {
+      right: 0;
+      left: 100%;
+    }
+  }
+  
+  
+  @keyframes blink {
+    50% {
+      opacity: 0.5;
+    }
+  }
+  
+.animated-text-reveal.running {
+    animation: pulse 1s infinite;
+}
+
+
+  /*
+  GLITCH ANIMATION
+  */
+  @keyframes glitch-effect {
+    0% {
+      filter: saturate(2);
+      transform: translateX(1px);
+    }
+    25% {
+      filter: hue-rotate(180deg);
+      transform: translateX(-1px);
+    }
+    50% {
+      filter: invert(0.7);
+      transform: translateY(1px);
+    }
+    100% {
+      filter: hue-rotate(0deg);
+      transform: translateY(-1px);
+    }
+  }
+  
+  .glitch {
+    animation: glitch-effect 300ms forwards; 
+  }
+
+
+
