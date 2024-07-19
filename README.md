@@ -36,7 +36,7 @@ wails build -clean -o yourexename.exe
 ```
 You can find it in the 'build/bin' directory.
 
-## Credits
+## Acknowledgments
 *  [Goproxy](https://github.com/elazarl/goproxy)
 *  [Wails](wails.io)
 *  [Baffle](https://github.com/camwiegert/baffle)
